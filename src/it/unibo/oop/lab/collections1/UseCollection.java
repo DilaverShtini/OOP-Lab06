@@ -3,6 +3,7 @@ package it.unibo.oop.lab.collections1;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 /**
  * Example class using {@link java.util.List} and {@link java.util.Map}.
@@ -22,7 +23,7 @@ public final class UseCollection {
          * 1) Create a new ArrayList<Integer>, and populate it with the numbers
          * from 1000 (included) to 2000 (excluded).
          */
-    	ArrayList<Integer> set = new ArrayList<Integer>();
+    	final List<Integer> set = new ArrayList<Integer>();
     	for(int i=1000; i<2000; i++) {
     		set.add(i);
     	}
@@ -31,13 +32,13 @@ public final class UseCollection {
          * without using any looping construct (for, while), populate it with
          * the same contents of the list of point 1.
          */
-    	LinkedList<Integer> list = new LinkedList<Integer>(set);
+    	final List<Integer> list = new LinkedList<Integer>(set);
         /*
          * 3) Using "set" and "get" and "size" methods, swap the first and last
          * element of the first list. You can not use any "magic number".
          * (Suggestion: use a temporary variable)
          */
-    	int tmp = set.get(set.size()-1);
+    	final int tmp = set.get(set.size()-1);
     	set.add(set.size()-1, set.get(999));
     	set.add(1000, tmp);
         /*
@@ -56,25 +57,38 @@ public final class UseCollection {
     	long time = System.nanoTime();
     	for (int i = 1; i <= 100_000; i++) {
             set.add(i);
+        }
+    	time = System.nanoTime() - time;
+    	System.out.println("Time for inserting new elements in array > "+time);
+    	
+        time = System.nanoTime();
+    	for (int i = 1; i <= 100_000; i++) {
             list.add(i);
         }
     	time = System.nanoTime() - time;
-    	System.out.println("Time for inserting new elements > "+time);
-        /*
+    	System.out.println("Time for inserting new elements in a linkedList > "+time);
+    	
+    	/*
          * 6) Measure the performance of reading 1000 times an element whose
          * position is in the middle of the collection for both ArrayList and
          * LinkedList, using the collections of point 5. In order to measure
          * times, use as example TestPerformance.java.
          */
     	long time2 = System.nanoTime();
-    	int var1, var2;
-    	for(int i=0; i<1000; i++) {
+    	int var1;
+    	for(int i=0; i<10_000; i++) {
     		var1 = set.get(set.size()/2);
-    		var2 = list.get(list.size()/2);
     	}
     	time2 = System.nanoTime() - time2;
-    	System.out.println("Time to reading > "+time2);
-        /*
+    	System.out.println("Time to reading in array > "+time2);
+        
+    	time2 = System.nanoTime();
+    	for(int i=0; i<10_000; i++) {
+    		var1 = list.get(list.size()/2);
+    	}
+    	time2 = System.nanoTime() - time2;
+    	System.out.println("Time to reading in a linkedList > "+time2);
+    	/*
          * 7) Build a new Map that associates to each continent's name its
          * population:
          * 
@@ -103,8 +117,7 @@ public final class UseCollection {
     	long count=0;
     	for(long elem: map.values()) {
     		count+=elem;
-    		System.out.println(" " + count);
     	}
-    	System.out.println(count);
+    	System.out.println("Population > " + count);
     }
 }
