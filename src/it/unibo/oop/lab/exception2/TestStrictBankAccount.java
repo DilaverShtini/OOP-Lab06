@@ -1,5 +1,8 @@
 package it.unibo.oop.lab.exception2;
 
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.fail;
+
 import org.junit.Test;
 
 /**
@@ -28,5 +31,35 @@ public final class TestStrictBankAccount {
     	
     	final StrictBankAccount account1 = new StrictBankAccount(user1.getUserID(), 10_000, 10);
     	final StrictBankAccount account2 = new StrictBankAccount(user2.getUserID(), 10_000, 10);
+    
+    	//too many transactions
+    	try {
+    		for(int i=0; i<10; i++) {
+    			account1.depositFromATM(user1.getUserID(), 1_000);
+    		}
+    		account1.depositFromATM(user1.getUserID(), 2_000);
+    		fail("The exception should be for too many transactions");
+    	}catch(TransactionsOverQuotaException e) {
+    		System.out.println(e);
+    	}
+    	
+    	//wrong account
+    	try {
+    		account2.deposit(user1.getUserID(), 500);
+    		fail("Wrong user!");
+    	}catch(WrongAccountHolderException e) {
+    		assertNotNull(e);
+    	}
+    	
+    	//not enough founds
+    	try {
+            account1.withdraw(user1.getUserID(), 1_000_000);
+        } catch (NotEnoughFoundsException e) {
+        	System.out.println(e);
+        } catch (Exception e) {
+        	fail();
+        }
+    	
     }
+
 }
