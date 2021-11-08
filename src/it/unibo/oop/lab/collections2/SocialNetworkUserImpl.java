@@ -1,6 +1,7 @@
 package it.unibo.oop.lab.collections2;
 
 import java.util.Collection;
+import java.util.*;
 import java.util.List;
 
 /**
@@ -29,7 +30,7 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * think of what type of keys and values would best suit the requirements
      */
-
+	private final Map<String, Set<U>> map;
     /*
      * [CONSTRUCTORS]
      * 
@@ -40,7 +41,6 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * 
      * 2) Define a further constructor where age is defaulted to -1
      */
-
     /**
      * Builds a new {@link SocialNetworkUserImpl}.
      * 
@@ -53,11 +53,16 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
      * @param user
      *            alias of the user, i.e. the way a user is identified on an
      *            application
+     * @return 
      */
     public SocialNetworkUserImpl(final String name, final String surname, final String user, final int userAge) {
         super(name, surname, user, userAge);
+        map = new HashMap<>();
     }
-
+	
+	public SocialNetworkUserImpl(final String firstName,final String lastName,final String username){
+		this(firstName, lastName, username, -1);
+	}
     /*
      * [METHODS]
      * 
@@ -66,7 +71,7 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-        return false;
+		return false;
     }
 
     @Override
