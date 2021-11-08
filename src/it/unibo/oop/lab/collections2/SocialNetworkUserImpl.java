@@ -91,7 +91,11 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public List<U> getFollowedUsers() {
-        return null;
+    	final Set<U> people = new HashSet<>();
+    	for(Set<U> group: map.values()) {
+    		people.addAll(group);
+    	}
+        return new ArrayList<U>(people);
     }
 
 }
