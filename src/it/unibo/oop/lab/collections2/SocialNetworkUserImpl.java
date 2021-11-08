@@ -1,8 +1,6 @@
 package it.unibo.oop.lab.collections2;
 
-import java.util.Collection;
 import java.util.*;
-import java.util.List;
 
 /**
  * 
@@ -71,7 +69,14 @@ public class SocialNetworkUserImpl<U extends User> extends UserImpl implements S
 
     @Override
     public boolean addFollowedUser(final String circle, final U user) {
-		return false;
+    	Set<U> CircleFriends = this.map.get(circle);
+    	if(CircleFriends != null) {
+    		return CircleFriends.add(user);
+    	}else {
+    		CircleFriends = new HashSet<>();
+    		map.put(circle, CircleFriends);
+    		return true;
+    	}
     }
 
     @Override
